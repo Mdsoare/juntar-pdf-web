@@ -121,7 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try {
             // 1. Acessa a biblioteca através do escopo global correto
-            const pdfLibObj = window.PDFLib || (typeof PDFLib !== 'undefined' ? PDFLib : null);
+            const pdfLibObj = window.PDFLib || (typeof globalThis.PDFLib !== 'undefined' ? globalThis.PDFLib : null);
             if (!pdfLibObj || !pdfLibObj.PDFDocument) {
                 throw new Error('Biblioteca PDFLib não encontrada ou carregada incorretamente.');
             }
