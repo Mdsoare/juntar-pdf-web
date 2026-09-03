@@ -2,9 +2,6 @@ import globals from "globals";
 
 export default [  
   {
-    ignores: ["assets/js/vendor/pdf-lib.min.js"],
-  },
-  {
     files: ["assets/js/**/*.js"],
     languageOptions: {
       ecmaVersion: 2022,

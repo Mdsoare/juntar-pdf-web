@@ -5,6 +5,8 @@
 
 'use strict';
 
+import { PDFDocument } from 'pdf-lib';
+
 if (self !== top) {
     top.location = self.location;
 }
@@ -120,16 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
         clearBtn.disabled = true;
 
         try {
-            // 1. Acessa a biblioteca através do escopo global correto
-            const pdfLibObj = window.PDFLib;
-
-            if (!pdfLibObj || !pdfLibObj.PDFDocument) {
-                throw new Error('Biblioteca PDFLib não encontrada no DOM. Verifique se assets/js/vendor/pdf-lib.min.js foi importado no HTML.');
-            }
-
-            const { PDFDocument } = pdfLibObj;
-
-            // 2. Cria o documento unificado final
+            // 1. Cria o documento unificado final direto da classe importada via ESM
             const mergedPdf = await PDFDocument.create();
 
             for (const file of selectedFiles) {
@@ -146,10 +139,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 copiedPages.forEach((page) => mergedPdf.addPage(page));
             }
 
-            // 3. Serializa o PDF final para bytes
+            // 2. Serializa o PDF final para bytes
             const pdfBytes = await mergedPdf.save();
 
-            // 4. Cria o Blob e aciona o download de forma segura
+            // 3. Cria o Blob e aciona o download de forma segura
             const blob = new Blob([pdfBytes], { type: 'application/pdf' });
             const downloadUrl = URL.createObjectURL(blob);
 

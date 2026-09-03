@@ -15,8 +15,9 @@
 
     <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
     <link rel="stylesheet" href="./assets/css/style.css" />
-    <script defer src="./assets/js/vendor/pdf-lib.min.js"></script>
-    <script defer src="./assets/js/script.js"></script>
+    
+    <!-- Carregamento modular do script principal. O bundler cuidará da importação da pdf-lib -->
+    <script type="module" src="./assets/js/script.js"></script>
 </head>
 
 <body>
