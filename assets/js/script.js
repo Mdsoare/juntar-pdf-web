@@ -6,6 +6,7 @@
 'use strict';
 
 import { PDFDocument } from 'pdf-lib';
+import '../css/style.css';
 
 if (self !== top) {
     top.location = self.location;
