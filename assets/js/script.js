@@ -120,36 +120,53 @@ document.addEventListener('DOMContentLoaded', () => {
         clearBtn.disabled = true;
 
         try {
-            if (typeof window.PDFLib === 'undefined') {
-                throw new Error('Biblioteca PDFLib não carregada.');
+            // 1. Acessa a biblioteca através do escopo global correto
+            const pdfLibObj = window.PDFLib || (typeof PDFLib !== 'undefined' ? PDFLib : null);
+            if (!pdfLibObj || !pdfLibObj.PDFDocument) {
+                throw new Error('Biblioteca PDFLib não encontrada ou carregada incorretamente.');
             }
 
-            const mergedPdf = await window.PDFLib.PDFDocument.create();
+            const { PDFDocument } = pdfLibObj;
+
+            // 2. Cria o documento unificado final
+            const mergedPdf = await PDFDocument.create();
 
             for (const file of selectedFiles) {
-                const fileBytes = await file.arrayBuffer();
-                const pdfDoc = await window.PDFLib.PDFDocument.load(fileBytes, { ignoreEncryption: true });
-                const copiedPages = await mergedPdf.copyPages(pdfDoc, pdfDoc.getPageIndices());
+                // Leitura do arquivo local em ArrayBuffer
+                const arrayBuffer = await file.arrayBuffer();
+
+                // Carrega o PDF na memória (ignoreEncryption ignora restrições leves de leitura)
+                const pdf = await PDFDocument.load(arrayBuffer, { ignoreEncryption: true });
+
+                // Copia todas as páginas do arquivo atual
+                const copiedPages = await mergedPdf.copyPages(pdf, pdf.getPageIndices());
+
+                // Adiciona as páginas ao documento consolidado
                 copiedPages.forEach((page) => mergedPdf.addPage(page));
             }
 
-            const mergedPdfBytes = await mergedPdf.save();
-            const blob = new Blob([mergedPdfBytes], { type: 'application/pdf' });
-            const blobUrl = URL.createObjectURL(blob);
+            // 3. Serializa o PDF final para bytes
+            const pdfBytes = await mergedPdf.save();
+
+            // 4. Cria o Blob e aciona o download de forma segura
+            const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+            const downloadUrl = URL.createObjectURL(blob);
 
             const downloadAnchor = document.createElement('a');
-            downloadAnchor.href = blobUrl;
+            downloadAnchor.href = downloadUrl;
             downloadAnchor.download = `documento_mesclado_${Date.now()}.pdf`;
             document.body.appendChild(downloadAnchor);
             downloadAnchor.click();
 
+            // Revogação imediata da URL para evitar Memory Leak
             document.body.removeChild(downloadAnchor);
-            URL.revokeObjectURL(blobUrl);
+            URL.revokeObjectURL(downloadUrl);
 
             showStatus('✔ Fusão concluída com sucesso! Download iniciado.', true, 'status-success');
             selectedFiles = [];
             setTimeout(updateUI, 2000);
-        } catch {
+        } catch (error) {
+            console.error('Detalhes do erro na fusão de PDFs:', error);
             showStatus(
                 '❌ Erro crítico ao fundir PDFs. Certifique-se de que nenhum arquivo possui proteção por senha.',
                 true,
