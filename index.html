@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src 'none'; style-src 'self'; script-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'none'; frame-ancestors 'none'; form-action 'none'; base-uri 'self';" />
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=(), payment=()" />
+
+    <title>Juntar PDF</title>
+
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <script defer src="assets/js/vendor/pdf-lib.min.js"></script>
+    <script defer src="assets/js/script.js"></script>
+</head>
+
+<body>
+
+    <main class="container">
+        <header class="app-header">
+            <h1>Juntar PDF</h1>
+            <p>Combine múltiplos documentos locais sem expor dados ou enviar arquivos para a rede.</p>
+        </header>
+
+        <!-- Dropzone -->
+        <section class="dropzone" id="dropzone" tabindex="0" role="button" aria-label="Área de seleção de arquivos PDF">
+            <p>📍 Arraste seus arquivos PDF aqui ou <strong>clique para navegar</strong></p>
+            <input type="file" id="pdfInput" accept="application/pdf" multiple aria-hidden="true" />
+        </section>
+
+        <!-- Controles Globais Permanentes -->
+        <div class="main-controls">
+            <button type="button" class="btn btn-secondary" id="addMoreBtn">➕ Selecionar / Adicionar PDFs</button>
+            <button type="button" class="btn btn-danger" id="clearBtn" disabled>🗑️ Limpar</button>
+        </div>
+
+        <!-- Fila de Arquivos (Exibida dinamicamente quando há itens) -->
+        <section class="file-list-section" id="fileListSection">
+            <span class="file-list-title">Documentos na fila:</span>
+            <ul class="file-list" id="fileList"></ul>
+
+            <button type="button" class="btn btn-primary" id="mergeBtn" disabled>🚀 Unir PDFs</button>
+        </section>
+
+        <div class="status-message" id="statusBox" aria-live="polite"></div>
+    </main>
+
+</body>
+
+</html>
