@@ -121,7 +121,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try {
             // 1. Acessa a biblioteca através do escopo global correto
-            const pdfLibObj = window.PDFLib || (typeof PDFLib !== 'undefined' ? PDFLib : null);
+            const pdfLibObj = window.PDFLib;
+
             if (!pdfLibObj || !pdfLibObj.PDFDocument) {
                 throw new Error('Biblioteca PDFLib não encontrada no DOM. Verifique se assets/js/vendor/pdf-lib.min.js foi importado no HTML.');
             }
