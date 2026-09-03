@@ -2,7 +2,7 @@ name: OWASP ZAP & Nuclei DAST Scan
 
 on:
   workflow_run:
-    workflows: ["pages-build-deployment"]
+    workflows: ["Deploy to GitHub Pages"]
     types:
       - completed
 
