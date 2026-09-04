@@ -1,12 +1,12 @@
 # 🛡️ Juntar PDF — Client-Side & DevSecOps Hardened
 
-<!-- Badges do Topo -->
 [![CI Pipeline](https://github.com/Mdsoare/juntar-pdf-web/actions/workflows/ci-pipeline.yml/badge.svg)](https://github.com/Mdsoare/juntar-pdf-web/actions/workflows/ci-pipeline.yml)
+[![Deploy to GitHub Pages](https://github.com/Mdsoare/juntar-pdf-web/actions/workflows/deploy.yml/badge.svg)](https://github.com/Mdsoare/juntar-pdf-web/actions/workflows/deploy.yml)
 [![Security Rating](https://img.shields.io/badge/Security-DevSecOps%20Hardened-green?style=flat&logo=github)](https://github.com/Mdsoare/juntar-pdf-web/security/code-scanning)
 ![Security: CSP Compliant](https://img.shields.io/badge/Security-CSP--Compliant-success.svg)
 ![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)
 
-<!-- Tech Stack & DevSecOps Ecosystem -->
+![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)
 ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
 ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
@@ -46,50 +46,66 @@ O **Juntar PDF Web** resolve essa vulnerabilidade ao realizar a leitura, extraç
 - 📥 **Upload & Drag-and-Drop:** Interface responsiva com suporte a arrastar e soltar ou navegação por arquivo.
 - 📋 **Gestão Dinâmica de Fila:** Visualização clara dos arquivos carregados, ordem de processamento e tamanho individual antes de consolidar.
 - 🧹 **Limpeza Segura de Memória:** Descarte imediato do buffer de documentos locais e revogação dinâmica de URLs do tipo Blob (`URL.revokeObjectURL`).
-- ⚡ **Execução Assíncrona e Otimizada:** Processamento via `pdf-lib` carregado de forma não-bloqueante (`defer`) para alta performance de renderização.
+- ⚡ **Execução Otimizada & Bundled:** Empacotamento via Vite com divisão de chunks, tree-shaking e cache busting automático para máxima performance.
 
 ---
 
 ## 🛠️ Tecnologias Utilizadas
 
+- **Vite:** Bundler de alta performance para gerenciamento de assets, servimento em desenvolvimento e geração de build de produção otimizado.
 - **HTML5 Semantic:** Estrutura focada em acessibilidade (WCAG) e SEO.
-- **CSS3 Moderno:** Layout responsivo, variáveis CSS, CSS Grid e Flexbox com design limpo e intuitivo.
-- **Vanilla JavaScript (ES6+):** Execução otimizada em escopo estrito (`'use strict'`), manipulando dados binários via `ArrayBuffer` e `Blob` API.
-- **pdf-lib (pdf-lib.min.js):** Manipulação e fusão local de documentos PDF hospedada localmente no repositório para total conformidade com a CSP.
+- **CSS3 Moderno:** Layout responsivo, variáveis CSS, CSS Grid e Flexbox integrados diretamente na esteira do Vite.
+- **Vanilla JavaScript (ES6+ Modules):** Execução otimizada em escopo estrito (`'use strict'`), manipulando dados binários via `ArrayBuffer` e `Blob` API.
+- **pdf-lib:** Gerenciada como dependência NPM para manipulação e fusão local de documentos PDF, empacotada com segurança no bundle final.
 
 ---
 
 ## 🔒 Postura de Segurança (DevSecOps)
 
-O projeto foi submetido a auditorias estáticas de código (SAST) e análise de dependências (SCA), contando com *hardening* específico para execução segura no navegador:
+O projeto é mantido sob uma esteira rigorosa de DevSecOps com auditorias estáticas de código (SAST), análise de dependências (SCA) e testes dinâmicos (DAST):
 
 | Vetor de Risco | Status | Ação / Mitigação Aplicada |
 | :--- | :---: | :--- |
 | **Data Exfiltration** | 🛡️ Protegido | Processamento 100% Client-Side. Comunicação externa totalmente bloqueada via Content Security Policy (`connect-src 'none'`). |
 | **DOM-XSS** | 🛡️ Protegido | Manipulação e renderização do DOM usando estritamente APIs puras como `textContent` e `createElement`. |
 | **Clickjacking** | 🛡️ Protegido | Proteção por script Frame-Busting ativo no carregamento e diretiva CSP `frame-ancestors 'none'`. |
-| **Bypass de Bibliotecas** | 🛡️ Protegido | Bundle da biblioteca `pdf-lib` mantido e servido localmente (`/assets/js/vendor/pdf-lib.min.js`). |
+| **Gestão de Dependências (SCA)** | 🛡️ Protegido | Dependências de terceiros gerenciadas via NPM com varreduras automatizadas por `npm audit`, OSV-Scanner e Trivy na esteira do CI. |
+| **Cache Busting & Integrity** | 🛡️ Protegido | O Vite gera hashes baseados no conteúdo dos arquivos compilados (`dist/`), impedindo a execução de scripts corrompidos ou em cache desatualizado. |
 | **Linter & Code Quality** | 🛡️ Protegido | Código auditado e validado via ESLint (Zero Warnings), Stylelint, HTMLHint e Markdownlint. |
 
 ---
 
 ## ⚙️ Como Executar Localmente
 
-Como a aplicação é 100% estática, não é necessário servidor web ou ambiente de execução no backend.
+### Pré-requisitos
+- Node.js (v24+ recomendado)
+- NPM
 
+### Passos
 1. **Clone o repositório:**
-  
-   ```bash
-   git clone https://github.com/Mdsoare/juntar-pdf-web.git
-   cd juntar-pdf-web
+
+    ```bash
+    git clone https://github.com/Mdsoare/juntar-pdf-web.git
+    cd juntar-pdf-web
     ```
 
-2. Execute o projeto:
+2. **Instale as dependências:**
 
-- Basta abrir o arquivo `index.html` diretamente em qualquer navegador moderno.
+    ```bash
+    npm ci
+    ```
+3. **Inicie o servidor de desenvolvimento:**
 
-- Ou utilize a extensão `Live Server` no VS Code.
+    ```bash
+    npm run dev
+    ```
+4. **Acesse a URL exibida no terminal** (geralmente http://localhost:5173/juntar-pdf-web/).
 
+5. **Para gerar a build de produção:**
+
+    ```bash
+    npm run build
+    ```
 ---
 
 ## 📜 Licença
