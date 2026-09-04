@@ -78,10 +78,12 @@ O projeto é mantido sob uma esteira rigorosa de DevSecOps com auditorias estát
 ## ⚙️ Como Executar Localmente
 
 ### Pré-requisitos
+
 - Node.js (v24+ recomendado)
 - NPM
 
 ### Passos
+
 1. **Clone o repositório:**
 
     ```bash
@@ -99,13 +101,16 @@ O projeto é mantido sob uma esteira rigorosa de DevSecOps com auditorias estát
     ```bash
     npm run dev
     ```
-4. **Acesse a URL exibida no terminal** (geralmente http://localhost:5173/juntar-pdf-web/).
+4. **Acesse a URL exibida no terminal**
+
+    - geralmente http://localhost:5173/juntar-pdf-web/.
 
 5. **Para gerar a build de produção:**
 
     ```bash
     npm run build
     ```
+
 ---
 
 ## 📜 Licença
