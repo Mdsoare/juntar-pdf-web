@@ -103,7 +103,7 @@ O projeto é mantido sob uma esteira rigorosa de DevSecOps com auditorias estát
     ```
 4. **Acesse a URL exibida no terminal**
 
-    - geralmente http://localhost:5173/juntar-pdf-web/.
+    - geralmente `http://localhost:5173/juntar-pdf-web/`.
 
 5. **Para gerar a build de produção:**
 
