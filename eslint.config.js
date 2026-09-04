@@ -1,26 +1,30 @@
 import js from '@eslint/js';
 import globals from 'globals';
 
-export default [  
+export default [
+  {
+    ignores: ['dist/**', 'node_modules/**'],
+  },
   js.configs.recommended,
   {
-    files: ["assets/js/**/*.js"],
+    files: ['**/*.js', '**/*.mjs'],
     languageOptions: {
       ecmaVersion: 'latest',
-      sourceType: "module",
+      sourceType: 'module',
       globals: {
         ...globals.browser,
-        XLSX: "readonly",
+        ...globals.node,
+        XLSX: 'readonly',
       },
     },
     rules: {
-      "no-undef": "error",
-      "no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }],
-      "no-eval": "error",
-      "no-implied-eval": "error",
-      "semi": ["error", "always"],
-      "quotes": ["warn", "single"],
-      "eqeqeq": ["error", "always"],
+      'no-undef': 'error',
+      'no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
+      'no-eval': 'error',
+      'no-implied-eval': 'error',
+      semi: ['error', 'always'],
+      quotes: ['warn', 'single'],
+      eqeqeq: ['error', 'always'],
     },
   },
 ];
