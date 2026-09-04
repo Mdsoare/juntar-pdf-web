@@ -284,16 +284,14 @@ jobs:
       - name: Validar estrutura de arquivos obrigatórios
         run: |
           test -f index.html || (echo "❌ index.html não encontrado!" && exit 1)
-          
-          # Verifica se existe pelo menos um arquivo .js na pasta assets/js/
-          if ! ls assets/js/*.js 1> /dev/null 2>&1; then
-            echo "❌ Nenhum arquivo JS encontrado em assets/js/!"
+
+          if ! (ls assets/js/*.js 1>/dev/null 2>&1 || ls src/**/*.js 1>/dev/null 2>&1 || ls src/*.js 1>/dev/null 2>&1); then
+            echo "❌ Nenhum arquivo JS encontrado em assets/js/ ou src/!"
             exit 1
           fi
 
-          # Verifica se existe pelo menos um arquivo .css na pasta assets/css/
-          if ! ls assets/css/*.css 1> /dev/null 2>&1; then
-            echo "❌ Nenhum arquivo CSS encontrado em assets/css/!"
+          if ! (ls assets/css/*.css 1>/dev/null 2>&1 || ls src/**/*.css 1>/dev/null 2>&1 || ls src/*.css 1>/dev/null 2>&1); then
+            echo "❌ Nenhum arquivo CSS encontrado em assets/css/ ou src/!"
             exit 1
           fi
 
@@ -328,7 +326,7 @@ jobs:
       - name: Configurar ambiente Node.js
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020
         with:
-          node-version: "24"
+          node-version: "20"
           cache: "npm"
 
       - name: Instalar Dependências
