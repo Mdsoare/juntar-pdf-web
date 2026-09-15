@@ -33,5 +33,8 @@
   },
   "dependencies": {
     "pdf-lib": "^1.17.1"
+  },
+  "overrides": {
+    "smol-toml": ">1.7.0"
   }
 }
