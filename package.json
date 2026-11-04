@@ -29,12 +29,17 @@
     "markdownlint-cli2": "^0.23.3",
     "stylelint": "^17.14.1",
     "stylelint-config-standard": "^40.0.0",
-    "vite": "^8.2.2"
+    "vite": "^8.3.3"
   },
   "dependencies": {
     "pdf-lib": "^1.17.1"
   },
-  "overrides": {
-    "smol-toml": ">1.7.0"
+  "overrides": {    
+    "markdown-it": "^15.0.3",
+    "source-map-js": "^1.2.1",
+    "fast-uri": "^3.0.6",
+    "minimatch": "^11.0.1",
+    "glob": "^14.0.2",
+    "smol-toml": "^1.8.1"
   }
 }
